@@ -15,11 +15,11 @@ export default function AboutPage() {
           <section>
             <h2 className="text-xl font-semibold text-gray-800 mb-3">项目简介</h2>
             <p>
-              AsaHome 是一个围绕 ASa Project 作品构建的个人技术展示网站，目标是展示从逆向数据处理、模型训练、
-              Web 服务到桌面客户端的完整技术链路。
-            </p>
-            <p className="mt-2">
-              项目完全非商业化，Blog 仅由站长发布，网站主要服务于中国大陆用户。
+              <li>AsaHome 是一个供 AsaP 玩耍的网站，以及为有需要的 AsaP 提供了我解包的一些角色语音、立绘、文本和 BGM 数据。</li>
+              <li>目前打算将这些数据上传 HugginFace，以供想自己训 TTS 模型的人使用</li>
+              <li>当然，如果你只是想猛猛听可爱的 emi 的语音也没有问题。</li>
+              <li>未来打算提供 TTS 服务，也会利用立绘开发一些桌宠。但是我平时上课啥的也挺忙的，可能效率不会很高，这就请多担待了。</li>
+              <li>这个网站我也打算唠唠嗑，会展示一些利用 AI 进行游戏逆向的探索过程，或者训 TTS 的一些经验，有兴趣的可以看看捏。</li>
             </p>
           </section>
 
@@ -46,9 +46,9 @@ export default function AboutPage() {
           <section>
             <h2 className="text-xl font-semibold text-gray-800 mb-3">非官方声明</h2>
             <p>
-              本站为非官方、完全非商业化的个人技术展示项目，与 ASa Project 及权利方无隶属或授权关系。
+              本站为非官方、完全非盈利的个人项目，目前主要服务于中国大陆用户，与 ASa Project 及权利方无隶属或授权关系。
               相关作品与角色权利归原权利方所有。本站不提供任何游戏资源下载，TTS 生成音频仅供技术学习参考，
-              不得冒充官方原始语音。
+              不得冒充官方原始语音。如有版权问题请联系我。
             </p>
           </section>
         </div>
