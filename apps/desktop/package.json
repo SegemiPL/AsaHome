@@ -2,21 +2,7 @@
   "name": "@asahome/desktop",
   "version": "0.1.0",
   "private": true,
-  "description": "AsaHome Desktop Pet — Tauri 2 + Vite + React (Phase 3 stub)",
-  "scripts": {
-    "dev": "echo 'Not implemented — Phase 3 placeholder'",
-    "build": "echo 'Not implemented — Phase 3 placeholder'",
-    "typecheck": "tsc --noEmit",
-    "lint": "echo 'noop'",
-    "test": "echo 'noop'",
-    "clean": "rm -rf dist target"
-  },
-  "dependencies": {
-    "@asahome/api-client": "workspace:*",
-    "@asahome/character-core": "workspace:*",
-    "@asahome/character-ui": "workspace:*",
-    "@asahome/shared-types": "workspace:*"
-  },
+  "description": "AsaHome Desktop — Phase 3 placeholder",
   "devDependencies": {
     "@asahome/config-eslint": "workspace:*",
     "@asahome/config-typescript": "workspace:*",

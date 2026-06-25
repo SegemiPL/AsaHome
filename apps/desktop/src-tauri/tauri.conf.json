@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicedoc/schemas/main/schemas/tauri.config.json",
-  "productName": "AsaHome Desktop Pet",
+  "productName": "AsaHome Desktop",
   "version": "0.1.0",
   "identifier": "com.asahome.desktop",
   "build": {
@@ -10,20 +10,12 @@
     "beforeBuildCommand": ""
   },
   "app": {
-    "withGlobalTauri": true,
     "windows": [
       {
-        "title": "AsaHome Pet",
-        "width": 300,
-        "height": 400,
-        "decorations": false,
-        "transparent": true,
-        "alwaysOnTop": true,
-        "resizable": false
+        "title": "AsaHome",
+        "width": 800,
+        "height": 600
       }
-    ],
-    "security": {
-      "csp": null
-    }
+    ]
   }
 }

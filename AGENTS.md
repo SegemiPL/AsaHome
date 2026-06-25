@@ -13,26 +13,26 @@
 - **Tech stack**: Next.js App Router + React + TypeScript + Tailwind CSS + Directus + PostgreSQL
 - **Monorepo**: pnpm workspace (see `pnpm-workspace.yaml`)
 - **Phase 1 goal**: Deliver a publicly accessible website with CMS-published blog, complete UI, placeholder TTS/pet pages
-- **Phase 2/3**: Only leave interfaces, types, placeholder pages, and extension points – do NOT implement business logic ahead of schedule
 
 ## Key Rules
 
-1. Do NOT implement features from future phases beyond stubs/interfaces/placeholders.
-2. Do NOT hardcode blog, character, release, or TTS data in frontend source.
-3. Do NOT expose Directus admin tokens, GPU inference ports, or object storage keys to the browser.
-4. Do NOT commit unpacked game assets (audio, text, sprites, model weights) to the public repo.
-5. No second state management library, no second API style, no duplicate dependencies without an ADR.
-6. Every feature must include implementation, tests, docs, and config examples.
-7. When requirements conflict with the baseline doc, flag it – don't guess.
+1. Do NOT implement features from future phases in any form — no business logic, no types, no interfaces, no data structures, no function signatures, no schemas.
+2. Phase 2/3 directories may contain ONLY: empty directories, placeholder files with a single comment (`// Phase N placeholder`), and minimal package/configuration skeletons. Do NOT create interfaces, types, enums, or function signatures ahead of schedule.
+3. Do NOT hardcode blog, character, release, or TTS data in frontend source.
+4. Do NOT expose Directus admin tokens, GPU inference ports, or object storage keys to the browser.
+5. Do NOT commit unpacked game assets (audio, text, sprites, model weights) to the public repo.
+6. No second state management library, no second API style, no duplicate dependencies without an ADR.
+7. Every feature must include implementation, tests, docs, and config examples.
+8. When requirements conflict with the baseline doc, flag it – don't guess.
 
 ## Directory Map
 
 ```
 asahome/
 ├── apps/web/          # Next.js App Router (Phase 1 active)
-├── apps/desktop/      # Tauri desktop pet (Phase 3 stub)
-├── packages/          # Shared packages (types, client, character)
-├── services/tts-api/  # FastAPI TTS service (Phase 2 stub)
+├── apps/desktop/      # Tauri desktop pet (Phase 3 placeholder — empty shell)
+├── packages/          # Shared packages (Phase 1: shared-types, api-client; Phase 3: character-* placeholders)
+├── services/tts-api/  # FastAPI TTS service (Phase 2 placeholder — empty shell)
 ├── directus/          # Schema snapshots, extensions
 ├── infrastructure/    # Docker Compose, Nginx, scripts
 ├── docs/              # Project docs, ADRs, architecture

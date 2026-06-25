@@ -4,6 +4,9 @@
 // Real implementations will replace these stubs as each API is built.
 // =============================================================================
 
+// Phase 1 API client placeholder
+// Real implementations deferred to Phase 2/3
+
 import type {
   PostListItem,
   PostDetail,
@@ -11,10 +14,6 @@ import type {
   Character,
   SiteSettings,
   DesktopRelease,
-  TtsJobRequest,
-  TtsJobResponse,
-  TtsJobResult,
-  TtsModel,
   PaginatedResult,
 } from "@asahome/shared-types";
 
@@ -68,22 +67,3 @@ export async function getDesktopReleases(
   throw new Error("Not implemented — Phase 1 placeholder");
 }
 
-// ---------------------------------------------------------------------------
-// TTS (Phase 2 stubs)
-// ---------------------------------------------------------------------------
-
-export async function createTtsJob(
-  _request: TtsJobRequest
-): Promise<TtsJobResponse> {
-  throw new Error("Not implemented — Phase 2 placeholder");
-}
-
-export async function getTtsJob(
-  _jobId: string
-): Promise<TtsJobResult | null> {
-  throw new Error("Not implemented — Phase 2 placeholder");
-}
-
-export async function getTtsModels(): Promise<TtsModel[]> {
-  throw new Error("Not implemented — Phase 2 placeholder");
-}

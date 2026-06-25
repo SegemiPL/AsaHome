@@ -18,10 +18,6 @@ export {
   getSiteSettings,
   // Desktop releases
   getDesktopReleases,
-  // TTS (Phase 2 stub)
-  createTtsJob,
-  getTtsJob,
-  getTtsModels,
 } from "./client";
 
 export { ApiClientError, isApiClientError } from "./errors";

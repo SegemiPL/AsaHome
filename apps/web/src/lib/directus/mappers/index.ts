@@ -101,8 +101,6 @@ export function mapSiteSettings(raw: DirectusSiteSettings): SiteSettings {
     defaultSeoDescription: raw.default_seo_description,
     socialLinks: raw.social_links ?? {},
     homeBackgroundAsset: fileToUrl(raw.home_background_asset),
-    ttsEnabled: raw.tts_enabled,
-    petEnabled: raw.pet_enabled,
   };
 }
 

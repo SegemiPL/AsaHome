@@ -52,8 +52,6 @@ export interface SiteSettings {
   defaultSeoDescription: string;
   socialLinks: Record<string, string>;
   homeBackgroundAsset: string | null;
-  ttsEnabled: boolean;
-  petEnabled: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -89,81 +87,6 @@ export interface DesktopRelease {
   releaseNotes: string;
   publishedAt: string;
   minimumOsVersion: string | null;
-}
-
-// ---------------------------------------------------------------------------
-// TTS (Phase 2 contract — types only in Phase 1)
-// ---------------------------------------------------------------------------
-
-export type TtsJobStatus =
-  | "queued"
-  | "translating"
-  | "synthesizing"
-  | "uploading"
-  | "succeeded"
-  | "failed"
-  | "cancelled"
-  | "expired";
-
-export interface TtsJobRequest {
-  textZh: string;
-  characterId: string;
-  modelId: string;
-  options?: {
-    speed?: number;
-  };
-}
-
-export interface TtsJobResponse {
-  jobId: string;
-  status: TtsJobStatus;
-  createdAt: string;
-  requestId: string;
-}
-
-export interface TtsJobResult {
-  jobId: string;
-  status: "succeeded";
-  textJa: string;
-  audioUrl: string;
-  expiresAt: string;
-  aiGenerated: true;
-}
-
-export interface TtsModel {
-  id: string;
-  characterId: string;
-  name: string;
-  version: string;
-  status: string;
-  language: string;
-  sampleRate: number;
-  description: string;
-  termsNotice: string;
-  createdAt: string;
-}
-
-// ---------------------------------------------------------------------------
-// Character Manifest (Phase 3 contract — types only in Phase 1)
-// ---------------------------------------------------------------------------
-
-export interface CharacterManifest {
-  schemaVersion: number;
-  id: string;
-  name: {
-    zh: string;
-    ja: string;
-  };
-  defaultState: string;
-  states: Record<string, CharacterState>;
-}
-
-export interface CharacterState {
-  asset?: string;
-  frames?: string[];
-  frameDurationMs?: number;
-  transition?: "fade" | "crossfade" | "none";
-  fallbackState?: string;
 }
 
 // ---------------------------------------------------------------------------

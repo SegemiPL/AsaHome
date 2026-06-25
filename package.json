@@ -4,10 +4,10 @@
   "private": true,
   "description": "AsaHome – ASa Project website providing TTS and WindowPet service",
   "scripts": {
-    "lint": "pnpm -r lint",
-    "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
-    "build": "pnpm -r build",
+    "lint": "pnpm --filter !@asahome/desktop -r lint",
+    "typecheck": "pnpm --filter !@asahome/desktop -r typecheck",
+    "test": "pnpm --filter !@asahome/desktop -r test",
+    "build": "pnpm --filter !@asahome/desktop -r build",
     "dev": "pnpm --filter @asahome/web dev",
     "clean": "pnpm -r clean"
   },

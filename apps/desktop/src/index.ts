@@ -1,1 +1,1 @@
-// AsaHome Desktop Pet — Phase 3 placeholder
+// Phase 3 desktop pet placeholder

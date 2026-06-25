@@ -9,19 +9,6 @@ importers:
   .: {}
 
   apps/desktop:
-    dependencies:
-      '@asahome/api-client':
-        specifier: workspace:*
-        version: link:../../packages/api-client
-      '@asahome/character-core':
-        specifier: workspace:*
-        version: link:../../packages/character-core
-      '@asahome/character-ui':
-        specifier: workspace:*
-        version: link:../../packages/character-ui
-      '@asahome/shared-types':
-        specifier: workspace:*
-        version: link:../../packages/shared-types
     devDependencies:
       '@asahome/config-eslint':
         specifier: workspace:*
@@ -108,10 +95,6 @@ importers:
         version: 5.8.3
 
   packages/character-core:
-    dependencies:
-      '@asahome/shared-types':
-        specifier: workspace:*
-        version: link:../shared-types
     devDependencies:
       '@asahome/config-typescript':
         specifier: workspace:*
@@ -122,12 +105,6 @@ importers:
 
   packages/character-ui:
     dependencies:
-      '@asahome/character-core':
-        specifier: workspace:*
-        version: link:../character-core
-      '@asahome/shared-types':
-        specifier: workspace:*
-        version: link:../shared-types
       react-dom:
         specifier: ^18 || ^19
         version: 19.2.3(react@19.2.3)
