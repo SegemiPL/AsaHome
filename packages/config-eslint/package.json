@@ -1,0 +1,10 @@
+{
+  "name": "@asahome/config-eslint",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.js",
+  "exports": {
+    "./next": "./next.js",
+    "./base": "./base.js"
+  }
+}

@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+dist/
+out/
+build/
+target/          # Tauri/Rust
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Docker
+.docker/
+
+# Directus uploads (local dev)
+directus/uploads/
+
+# Tauri
+apps/desktop/src-tauri/target/
+
+# Secrets and keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS files
+Thumbs.db
+ehthumbs.db

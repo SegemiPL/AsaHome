@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Base layer — global resets and CSS custom properties
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --color-brand-500: oklch(0.55 0.10 280);
+    --font-sans: "Noto Sans SC", "Noto Sans JP", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-gray-900 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  /* Respect user motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Component layer — reusable patterns
+   ========================================================================== */
+
+@layer components {
+  /* Content card — semi-transparent, rounded, shadowed */
+  .card {
+    @apply bg-white/85 rounded-card shadow-card backdrop-blur-sm;
+  }
+
+  .card-hover {
+    @apply card transition-shadow duration-300;
+  }
+  .card-hover:hover {
+    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 0.08);
+  }
+
+  /* Prose container for blog content */
+  .prose-container {
+    @apply max-w-prose mx-auto;
+  }
+
+  /* Page section wrapper */
+  .section {
+    @apply py-16 px-6 md:px-8;
+  }
+
+  .section-inner {
+    @apply max-w-content mx-auto;
+  }
+
+  /* Placeholder banner for in-development pages */
+  .placeholder-banner {
+    @apply bg-brand-50 border border-brand-200 rounded-card px-6 py-4 text-brand-700 text-sm;
+  }
+}
+
+/* ==========================================================================
+   Utility layer
+   ========================================================================== */
+
+@layer utilities {
+  /* Content max-width shortcut */
+  .max-w-content {
+    max-width: 72rem;
+  }
+}
