@@ -1,0 +1,10 @@
+{
+  "name": "@asahome/config-typescript",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./base": "./base.json",
+    "./next": "./next.json",
+    "./react": "./react.json"
+  }
+}
