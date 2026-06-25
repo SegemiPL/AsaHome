@@ -4,37 +4,43 @@
 
 ## Before You Start
 
-1. Read `docs/reference/AsaHome_Coding_Agent_Development_Guide.md` – this is the authoritative baseline for all development.
-2. Follow the 10 Coding Agent rules in Section 0 of that document.
-3. The project is currently in **Phase 1** (Website + CMS + Blog + UI).
+1. Read `docs/STATIC_ARCHITECTURE.md` — this is the authoritative baseline for the static site architecture.
+2. The project is currently a **static site** built with Next.js Static Export.
 
 ## Quick Reference
 
-- **Tech stack**: Next.js App Router + React + TypeScript + Tailwind CSS + Directus + PostgreSQL
-- **Monorepo**: pnpm workspace (see `pnpm-workspace.yaml`)
-- **Phase 1 goal**: Deliver a publicly accessible website with CMS-published blog, complete UI, placeholder TTS/pet pages
+- **Tech stack**: Next.js Static Export + React + TypeScript + Tailwind CSS
+- **Content**: Markdown (Blog) + TypeScript static data (characters, TTS, pet)
+- **Deploy**: Static hosting (OSS, COS, GitHub Pages, Cloudflare Pages)
+- **No runtime dependencies**: No Node.js server, no database, no CMS, no Docker
 
 ## Key Rules
 
-1. Do NOT implement features from future phases in any form — no business logic, no types, no interfaces, no data structures, no function signatures, no schemas.
-2. Phase 2/3 directories may contain ONLY: empty directories, placeholder files with a single comment (`// Phase N placeholder`), and minimal package/configuration skeletons. Do NOT create interfaces, types, enums, or function signatures ahead of schedule.
-3. Do NOT hardcode blog, character, release, or TTS data in frontend source.
-4. Do NOT expose Directus admin tokens, GPU inference ports, or object storage keys to the browser.
-5. Do NOT commit unpacked game assets (audio, text, sprites, model weights) to the public repo.
-6. No second state management library, no second API style, no duplicate dependencies without an ADR.
-7. Every feature must include implementation, tests, docs, and config examples.
-8. When requirements conflict with the baseline doc, flag it – don't guess.
+1. Do NOT reintroduce Directus, PostgreSQL, Docker, or any server-side infrastructure.
+2. Do NOT create API routes (`route.ts`), Server Actions, or middleware.
+3. Do NOT depend on runtime `cookies()`, `headers()`, or database requests.
+4. All pages MUST be compatible with `output: "export"` (static export).
+5. Dynamic routes MUST provide `generateStaticParams()`.
+6. Blog content goes in `src/content/posts/*.md` with YAML frontmatter.
+7. Static data (characters, TTS samples, pet info) goes in `src/data/*.ts`.
+8. Do NOT commit unpacked game assets (audio, text, sprites, model weights) to the public repo.
+9. Do NOT expose secrets or tokens — static sites have no server-side env.
+10. No second state management library, no second API style, no duplicate dependencies without an ADR.
 
 ## Directory Map
 
 ```
 asahome/
-├── apps/web/          # Next.js App Router (Phase 1 active)
-├── apps/desktop/      # Tauri desktop pet (Phase 3 placeholder — empty shell)
-├── packages/          # Shared packages (Phase 1: shared-types, api-client; Phase 3: character-* placeholders)
-├── services/tts-api/  # FastAPI TTS service (Phase 2 placeholder — empty shell)
-├── directus/          # Schema snapshots, extensions
-├── infrastructure/    # Docker Compose, Nginx, scripts
-├── docs/              # Project docs, ADRs, architecture
-└── .github/workflows/ # CI/CD
+├── apps/web/
+│   └── src/
+│       ├── app/            # Next.js App Router pages
+│       ├── components/     # React components
+│       ├── content/posts/  # Markdown blog posts
+│       ├── data/           # Static data (characters, TTS, pet, site config)
+│       ├── lib/            # Utility modules (posts.ts, markdown rendering)
+│       └── styles/         # Global CSS
+├── packages/               # Shared config packages (config-eslint, config-typescript)
+├── docs/                   # Project documentation
+│   └── archive/            # Archived dynamic architecture docs
+└── .github/workflows/      # CI/CD
 ```

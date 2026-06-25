@@ -1,60 +1,122 @@
 import type { Metadata } from "next";
+import { petProjectInfo, petScreenshots, petDisclaimer } from "@/data";
 
 export const metadata: Metadata = {
   title: "桌面桌宠",
-  description: "Windows / macOS 本地角色桌宠（开发中）",
+  description: "跨平台桌面桌宠客户端（Tauri 2）— 功能展示与下载",
 };
 
-/**
- * Desktop Pet placeholder page — Phase 1.
- *
- * Constraints per Section 7.4:
- * - Clearly marked "开发中"
- * - Explains planned capabilities
- * - No clickable but non-functional buttons
- * - No fake simulation
- */
 export default function PetPage() {
   return (
     <div className="section">
       <div className="section-inner max-w-prose mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">桌面桌宠</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">桌面桌宠</h1>
 
-        <div className="placeholder-banner mb-8">
-          🚧 此功能正在开发中，将在后续版本上线。
-        </div>
+        {/* Project Info */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">项目介绍</h2>
+          <p className="text-gray-600 leading-relaxed mb-4">
+            {petProjectInfo.description}
+          </p>
 
-        <div className="space-y-6 text-gray-600 leading-relaxed">
-          <section>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">计划能力</h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Windows 和 macOS 原生桌面客户端（Tauri 2）</li>
-              <li>透明无边框窗口，始终置顶显示角色立绘</li>
-              <li>鼠标拖动、点击穿透、系统托盘</li>
-              <li>角色状态切换（idle、smile、speaking 等）</li>
-              <li>自动更新支持</li>
-              <li>可选 TTS 语音播放联动</li>
-            </ul>
-          </section>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">主要功能</h3>
+          <ul className="list-disc pl-6 space-y-1 text-gray-600 mb-4">
+            {petProjectInfo.features.map((feature) => (
+              <li key={feature}>{feature}</li>
+            ))}
+          </ul>
 
-          <section>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">技术实现</h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>基于 Tauri 2，复用 React/TypeScript 角色组件</li>
-              <li>与 Web 端共享角色协议（Character Manifest）和 UI 逻辑</li>
-              <li>第一版角色动画使用图片状态切换和淡入淡出，不引入 Live2D</li>
-              <li>角色包支持版本化管理和 SHA-256 校验</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">非官方声明</h2>
+          <div className="space-y-2 text-sm text-gray-500">
             <p>
-              桌宠角色素材基于 ASa Project 作品，仅用于个人技术展示。
-              不提供完整游戏资源下载，角色包不包含可执行代码。
+              <strong>技术栈：</strong>
+              {petProjectInfo.techStack.join(" / ")}
             </p>
+            <p>
+              <strong>GitHub：</strong>
+              <a
+                href={petProjectInfo.githubRepo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-600 hover:underline ml-1"
+              >
+                {petProjectInfo.githubRepo}
+              </a>
+            </p>
+          </div>
+        </section>
+
+        {/* Screenshots */}
+        {petScreenshots.length > 0 && (
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">截图展示</h2>
+            <div className="space-y-6">
+              {petScreenshots.map((shot) => (
+                <figure key={shot.src} className="text-center">
+                  <img
+                    src={shot.src}
+                    alt={shot.alt}
+                    className="rounded-lg max-w-full h-auto mx-auto"
+                    loading="lazy"
+                  />
+                  {shot.caption && (
+                    <figcaption className="text-sm text-gray-500 mt-2">
+                      {shot.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
           </section>
-        </div>
+        )}
+
+        {petScreenshots.length === 0 && (
+          <section className="mb-10">
+            <div className="placeholder-banner">
+              🚧 桌宠截图正在准备中，将在后续更新。
+            </div>
+          </section>
+        )}
+
+        {/* Downloads */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">下载</h2>
+          <p className="text-gray-600 text-sm mb-4">
+            桌宠客户端通过 GitHub Releases 发布。请前往以下页面下载对应平台版本：
+          </p>
+          <div className="space-y-3">
+            <a
+              href={`${petProjectInfo.githubRepo}/releases`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-2.5 bg-brand-600 text-white rounded-full hover:bg-brand-700 transition-colors text-sm"
+            >
+              GitHub Releases
+            </a>
+            <p className="text-xs text-gray-400 mt-2">
+              支持平台：
+              {petProjectInfo.platforms.map((p) => p.downloadLabel).join(" / ")}
+            </p>
+          </div>
+        </section>
+
+        {/* Disclaimer */}
+        <section>
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
+            <strong>声明：</strong> {petDisclaimer}
+          </div>
+          <p className="text-sm text-gray-500 mt-6">
+            本地部署和安装文档请查看{" "}
+            <a
+              href={petProjectInfo.githubRepo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-600 hover:underline"
+            >
+              GitHub 仓库
+            </a>
+            。
+          </p>
+        </section>
       </div>
     </div>
   );

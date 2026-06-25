@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
+import { getAllPostSlugs } from "@/lib/posts";
+import { siteConfig } from "@/data";
 
-/**
- * Phase 1: static sitemap with known pages.
- * Will be made dynamic when Directus data is available.
- */
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = siteConfig.siteUrl;
 
   const staticPages = [
     { url: "/", changeFrequency: "weekly" as const, priority: 1 },
@@ -19,7 +19,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/copyright", changeFrequency: "yearly" as const, priority: 0.3 },
   ];
 
-  return staticPages.map((page) => ({
+  const postPages = getAllPostSlugs().map((slug) => ({
+    url: `/blog/${slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...postPages].map((page) => ({
     url: `${siteUrl}${page.url}`,
     lastModified: new Date(),
     changeFrequency: page.changeFrequency,

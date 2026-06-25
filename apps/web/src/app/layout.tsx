@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import "@/styles/globals.css";
+import { siteConfig } from "@/data";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "AsaHome",
+    default: siteConfig.defaultSeoTitle,
     template: "%s | AsaHome",
   },
-  description: "ASa Project Home",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  description: siteConfig.defaultSeoDescription,
 };
 
 export default function RootLayout({

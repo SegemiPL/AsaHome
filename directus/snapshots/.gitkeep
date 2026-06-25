@@ -1,2 +1,0 @@
-# Schema snapshots will be committed here after initial Directus setup.
-# Run: npx directus schema snapshot --yes ./directus/snapshots/schema.yaml

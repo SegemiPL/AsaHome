@@ -1,35 +1,68 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { getAllPosts, getAllTags } from "@/lib/posts";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "站长 Blog — 杂谈、逆向工程记录与开发日志",
+  description: "技术研究与开发日志",
 };
 
-// Phase 1: static placeholder. Will fetch from Directus in P1.4.
 export default function BlogListPage() {
+  const posts = getAllPosts();
+  const tags = getAllTags();
+
   return (
     <div className="section">
-      <div className="section-inner">
+      <div className="section-inner max-w-prose mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 mb-8">Blog</h1>
 
-        {/* Placeholder article cards */}
-        <div className="space-y-6">
-          {[1, 2, 3].map((i) => (
-            <article key={i} className="card p-6 animate-fade-in">
-              <div className="h-4 bg-gray-100 rounded w-3/4 mb-3" />
-              <div className="h-3 bg-gray-50 rounded w-full mb-2" />
-              <div className="h-3 bg-gray-50 rounded w-2/3" />
-              <div className="flex items-center gap-4 mt-4">
-                <div className="h-3 bg-gray-50 rounded w-20" />
-                <div className="h-3 bg-gray-50 rounded w-16" />
-              </div>
-            </article>
-          ))}
-        </div>
+        {posts.length === 0 ? (
+          <p className="text-gray-500">暂无文章。</p>
+        ) : (
+          <div className="space-y-8">
+            {posts.map((post) => (
+              <article key={post.slug} className="border-b border-gray-200 pb-6 last:border-0">
+                <Link href={`/blog/${post.slug}`} className="group">
+                  <h2 className="text-xl font-semibold text-gray-800 group-hover:text-brand-600 transition-colors">
+                    {post.title}
+                  </h2>
+                </Link>
+                <p className="text-sm text-gray-400 mt-1">
+                  {new Date(post.date).toLocaleDateString("zh-CN", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+                {post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {post.tags.map((tag) => (
+                      <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <p className="text-gray-600 mt-3 text-sm leading-relaxed">
+                  {post.summary}
+                </p>
+              </article>
+            ))}
+          </div>
+        )}
 
-        <p className="text-gray-400 text-sm mt-8 text-center">
-          Blog 内容将随 Directus CMS 部署后动态加载
-        </p>
+        {tags.length > 0 && (
+          <div className="mt-12 pt-6 border-t border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">标签</h3>
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <span key={tag} className="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

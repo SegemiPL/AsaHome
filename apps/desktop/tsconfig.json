@@ -1,7 +1,0 @@
-{
-  "extends": "@asahome/config-typescript/react",
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "include": ["src"]
-}
