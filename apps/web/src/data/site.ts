@@ -18,5 +18,5 @@ export const siteConfig = {
   socialLinks: {
     github: "https://github.com/SegemiPL",
   },
-  siteUrl: "https://asahome.example",
+  siteUrl: "https://asahome.cc",
 };
