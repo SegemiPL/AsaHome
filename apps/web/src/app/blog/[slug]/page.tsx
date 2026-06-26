@@ -65,66 +65,69 @@ export default async function BlogPostPage({
         {/* ----------------------------------------------------------
             Two-column layout: main article + sticky TOC sidebar
             ---------------------------------------------------------- */}
-        <div className="flex gap-16 lg:gap-20 xl:gap-24">
-          {/* Main column — capped at 720px for comfortable CJK reading */}
-          <div className="min-w-0 flex-1 max-w-[720px]">
-            <article>
-              {/* Header */}
-              <header className="mb-10">
-                <h1 className="text-3xl font-bold text-gray-800 mb-4">
-                  {post.title}
-                </h1>
-                <p className="text-sm text-gray-400">
-                  {new Date(post.date).toLocaleDateString("zh-CN", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </header>
+        {/* ----------------------------------------------------------
+            Article centered, TOC floats to its right.
+            The article wrapper is sized and centered. The TOC uses
+            absolute positioning relative to it so it sits to the right
+            without affecting the article's centering.
+            ---------------------------------------------------------- */}
+        <div className="relative max-w-[840px] mx-auto">
+          <article>
+            {/* Header */}
+            <header className="mb-10">
+              <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                {post.title}
+              </h1>
+              <p className="text-sm text-gray-400">
+                {new Date(post.date).toLocaleDateString("zh-CN", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </header>
 
-              {/* Inline TOC (mobile only) */}
-              <MobileTableOfContents items={post.toc} />
+            {/* Inline TOC (mobile only) */}
+            <MobileTableOfContents items={post.toc} />
 
-              {/* Article body */}
-              <div className="article-content mb-12">
-                <MarkdownArticle source={post.content} />
-              </div>
-            </article>
-
-            {/* Post navigation */}
-            <nav className="pt-6 border-t border-gray-200 flex justify-between items-start gap-4">
-              {prevPost ? (
-                <Link
-                  href={`/blog/${prevPost.slug}`}
-                  className="text-sm text-brand-600 hover:underline max-w-[45%]"
-                >
-                  ← {prevPost.title}
-                </Link>
-              ) : (
-                <span />
-              )}
-              {nextPost ? (
-                <Link
-                  href={`/blog/${nextPost.slug}`}
-                  className="text-sm text-brand-600 hover:underline max-w-[45%] text-right"
-                >
-                  {nextPost.title} →
-                </Link>
-              ) : (
-                <span />
-              )}
-            </nav>
-
-            <div className="mt-6">
-              <Link href="/blog" className="text-sm text-brand-600 hover:underline">
-                ← 返回 Blog 列表
-              </Link>
+            {/* Article body */}
+            <div className="article-content mb-12">
+              <MarkdownArticle source={post.content} />
             </div>
+          </article>
+
+          {/* Post navigation */}
+          <nav className="pt-6 border-t border-gray-200 flex justify-between items-start gap-4">
+            {prevPost ? (
+              <Link
+                href={`/blog/${prevPost.slug}`}
+                className="text-sm text-brand-600 hover:underline max-w-[45%]"
+              >
+                ← {prevPost.title}
+              </Link>
+            ) : (
+              <span />
+            )}
+            {nextPost ? (
+              <Link
+                href={`/blog/${nextPost.slug}`}
+                className="text-sm text-brand-600 hover:underline max-w-[45%] text-right"
+              >
+                {nextPost.title} →
+              </Link>
+            ) : (
+              <span />
+            )}
+          </nav>
+
+          <div className="mt-6">
+            <Link href="/blog" className="text-sm text-brand-600 hover:underline">
+              ← 返回 Blog 列表
+            </Link>
           </div>
 
-          {/* Sidebar — desktop TOC */}
-          <aside className="hidden lg:block w-[210px] xl:w-[240px] flex-shrink-0">
+          {/* Desktop TOC — absolutely positioned to the right of the article */}
+          <aside className="hidden lg:block absolute top-0 left-[calc(100%+48px)] xl:left-[calc(100%+64px)] w-[210px] xl:w-[240px]">
             <TableOfContents items={post.toc} />
           </aside>
         </div>
