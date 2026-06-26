@@ -2,6 +2,7 @@
   "extends": "@asahome/config-typescript/next",
   "compilerOptions": {
     "baseUrl": ".",
+    "incremental": false,
     "paths": {
       "@/*": ["./src/*"]
     }

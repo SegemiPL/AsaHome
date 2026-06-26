@@ -62,6 +62,14 @@ export interface RenderedMarkdown {
   toc: TocEntry[];
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 /**
  * Render Markdown to HTML string with TOC.
  * Use `MarkdownArticle` component for React rendering instead.
@@ -69,5 +77,23 @@ export interface RenderedMarkdown {
  */
 export function renderMarkdown(markdown: string): RenderedMarkdown {
   const toc = extractToc(markdown);
-  return { html: "", toc };
+  const slugger = new GithubSlugger();
+  const html = markdown
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block) => {
+      const heading = /^(#{1,6})\s+(.+)$/.exec(block);
+      if (heading) {
+        const level = heading[1].length;
+        const text = heading[2].trim();
+        const id = slugger.slug(text);
+        return `<h${level} id="${id}">${escapeHtml(text)}</h${level}>`;
+      }
+
+      return `<p>${escapeHtml(block)}</p>`;
+    })
+    .join("");
+
+  return { html, toc };
 }

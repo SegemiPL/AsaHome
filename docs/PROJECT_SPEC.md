@@ -1,7 +1,6 @@
 # AsaHome Project Specification
 
-> 本文件为项目概览。完整开发规范请参阅：
-> `docs/reference/AsaHome_Coding_Agent_Development_Guide.md`
+> 本文件为当前静态站点项目概览。历史动态架构资料已归档，仅作参考。
 
 ## 项目定位
 
@@ -18,32 +17,32 @@ AsaHome 是一个围绕 ASa Project 作品构建的**非商业化个人技术展
 
 | 领域 | 方案 |
 |------|------|
-| Web | Next.js App Router + React + TypeScript + Tailwind CSS |
-| CMS | Directus + PostgreSQL |
-| TTS | FastAPI + Redis + Celery + GPU Worker |
-| Desktop | Tauri 2 + Vite + React |
+| Web | Next.js Static Export + React + TypeScript + Tailwind CSS |
+| 内容 | Markdown Blog + TypeScript 静态数据 |
+| TTS | 独立仓库，本站只展示说明与预生成样例 |
+| Desktop | 独立仓库，本站只展示说明与下载入口 |
 | Monorepo | pnpm workspace |
-| 部署 | Docker Compose + Nginx |
+| 部署 | 静态托管（OSS / COS / GitHub Pages / Cloudflare Pages） |
 
 ## 阶段计划
 
 | 阶段 | 交付目标 |
 |------|---------|
-| Phase 1 | 网站 + CMS + Blog + 完整 UI + 部署 |
-| Phase 2 | 独立 TTS API + 队列 + GPU |
-| Phase 3 | 网页角色 + Tauri 桌宠 + 双平台发布 |
+| Phase 1 | 静态网站 + Markdown Blog + 基础页面 + 静态部署 |
+| Phase 2 | TTS 项目说明、预生成样例与独立仓库链接 |
+| Phase 3 | 桌宠项目说明、截图、平台信息与 Releases 下载入口 |
 
 ## 快速开始
 
 ```bash
-# 前置条件: Node.js >= 20, pnpm >= 9, Docker
+# 前置条件: Node.js >= 20, pnpm >= 9
 
 # 安装依赖
 pnpm install
 
-# 启动开发数据库和 CMS
-docker compose -f infrastructure/compose/docker-compose.dev.yml up -d
-
 # 启动 Next.js 开发服务器
 pnpm dev
+
+# 构建静态站点
+pnpm build
 ```

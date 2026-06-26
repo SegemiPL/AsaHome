@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { characters } from "@/data";
 
 export const metadata: Metadata = {
@@ -19,30 +18,29 @@ export default function CharactersPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {characters
+            {[...characters]
               .sort((a, b) => a.displayOrder - b.displayOrder)
               .map((char) => (
-                <Link
+                <article
                   key={char.id}
-                  href={`/characters/${char.slug}`}
-                  className="block border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow group"
+                  className="border border-gray-200 rounded-lg overflow-hidden"
                 >
                   <div className="aspect-square bg-gray-100 relative overflow-hidden">
                     <img
                       src={char.defaultPortrait}
                       alt={char.nameZh}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   </div>
                   <div className="p-4">
-                    <h2 className="font-semibold text-gray-800 group-hover:text-brand-600 transition-colors">
+                    <h2 className="font-semibold text-gray-800">
                       {char.nameZh}
                     </h2>
                     <p className="text-sm text-gray-400 mt-1">{char.nameJa}</p>
                     <p className="text-xs text-gray-400 mt-1">{char.gameTitle}</p>
                   </div>
-                </Link>
+                </article>
               ))}
           </div>
         )}

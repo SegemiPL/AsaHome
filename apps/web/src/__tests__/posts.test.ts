@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { getAllPosts, getPostBySlug, getAllPostSlugs } from "@/lib/posts";
+import { renderMarkdown } from "@/lib/markdown";
 
 describe("posts", () => {
   it("should return at least one published post", () => {
@@ -44,6 +45,14 @@ describe("posts", () => {
   it("should return all post slugs", () => {
     const slugs = getAllPostSlugs();
     expect(slugs).toContain("hello-asahome");
+  });
+
+  it("should render markdown to non-empty escaped HTML", () => {
+    const rendered = renderMarkdown("## Heading\n\n<script>alert('x')</script>");
+
+    expect(rendered.html).toContain('<h2 id="heading">Heading</h2>');
+    expect(rendered.html).toContain("&lt;script&gt;");
+    expect(rendered.toc).toEqual([{ id: "heading", text: "Heading", level: 2 }]);
   });
 
   it("should not include draft posts in the list", () => {
