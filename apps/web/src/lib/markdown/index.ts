@@ -1,2 +1,2 @@
-export { renderMarkdown } from "./renderer";
-export type { RenderedMarkdown, TocEntry } from "./renderer";
+export { extractToc, renderMarkdown } from "./renderer";
+export type { TocEntry, RenderedMarkdown } from "./renderer";

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPostSlugs, getAllPosts } from "@/lib/posts";
+import { MarkdownArticle } from "@/components/blog/MarkdownArticle";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { MobileTableOfContents } from "@/components/blog/MobileTableOfContents";
 
 // ---------------------------------------------------------------------------
 // Static path generation
@@ -58,77 +61,84 @@ export default async function BlogPostPage({
 
   return (
     <div className="section">
-      <div className="section-inner max-w-prose mx-auto">
-        <article>
-          {/* Header */}
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              {post.title}
-            </h1>
-            <p className="text-sm text-gray-400">
-              {new Date(post.date).toLocaleDateString("zh-CN", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </p>
-            {post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded"
-                  >
-                    {tag}
-                  </span>
-                ))}
+      <div className="max-w-content mx-auto">
+        {/* ----------------------------------------------------------
+            Two-column layout: main article + sticky TOC sidebar
+            ---------------------------------------------------------- */}
+        <div className="flex gap-16 lg:gap-20 xl:gap-24">
+          {/* Main column */}
+          <div className="min-w-0 flex-1">
+            <article>
+              {/* Header */}
+              <header className="mb-10">
+                <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                  {post.title}
+                </h1>
+                <p className="text-sm text-gray-400">
+                  {new Date(post.date).toLocaleDateString("zh-CN", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+                {post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {post.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </header>
+
+              {/* Inline TOC (mobile only) */}
+              <MobileTableOfContents items={post.toc} />
+
+              {/* Article body */}
+              <div className="article-content mb-12">
+                <MarkdownArticle source={post.content} />
               </div>
-            )}
-          </header>
+            </article>
 
-          {/* Content */}
-          <div
-            className="prose prose-gray max-w-none
-              prose-headings:text-gray-800
-              prose-p:text-gray-600 prose-p:leading-relaxed
-              prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline
-              prose-code:text-sm prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-              prose-pre:bg-gray-900 prose-pre:text-gray-100
-              prose-img:rounded-lg
-              prose-li:text-gray-600
-              prose-hr:border-gray-200"
-            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-          />
+            {/* Post navigation */}
+            <nav className="pt-6 border-t border-gray-200 flex justify-between items-start gap-4">
+              {prevPost ? (
+                <Link
+                  href={`/blog/${prevPost.slug}`}
+                  className="text-sm text-brand-600 hover:underline max-w-[45%]"
+                >
+                  ← {prevPost.title}
+                </Link>
+              ) : (
+                <span />
+              )}
+              {nextPost ? (
+                <Link
+                  href={`/blog/${nextPost.slug}`}
+                  className="text-sm text-brand-600 hover:underline max-w-[45%] text-right"
+                >
+                  {nextPost.title} →
+                </Link>
+              ) : (
+                <span />
+              )}
+            </nav>
 
-          {/* Navigation */}
-          <nav className="mt-12 pt-6 border-t border-gray-200 flex justify-between items-start gap-4">
-            {prevPost ? (
-              <Link
-                href={`/blog/${prevPost.slug}`}
-                className="text-sm text-brand-600 hover:underline max-w-[45%]"
-              >
-                ← {prevPost.title}
+            <div className="mt-6">
+              <Link href="/blog" className="text-sm text-brand-600 hover:underline">
+                ← 返回 Blog 列表
               </Link>
-            ) : (
-              <span />
-            )}
-            {nextPost ? (
-              <Link
-                href={`/blog/${nextPost.slug}`}
-                className="text-sm text-brand-600 hover:underline max-w-[45%] text-right"
-              >
-                {nextPost.title} →
-              </Link>
-            ) : (
-              <span />
-            )}
-          </nav>
-        </article>
+            </div>
+          </div>
 
-        <div className="mt-8">
-          <Link href="/blog" className="text-sm text-brand-600 hover:underline">
-            ← 返回 Blog 列表
-          </Link>
+          {/* Sidebar — desktop TOC */}
+          <aside className="hidden lg:block w-[210px] xl:w-[240px] flex-shrink-0">
+            <TableOfContents items={post.toc} />
+          </aside>
         </div>
       </div>
     </div>

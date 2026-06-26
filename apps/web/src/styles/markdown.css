@@ -1,0 +1,292 @@
+/* ==========================================================================
+   AsaHome Blog Article Styles
+   ==========================================================================
+   Layered on top of Tailwind Typography's prose class.
+   Defines AsaHome-specific visual treatment for:
+   - headings (h2–h4)
+   - links
+   - blockquotes
+   - inline code vs code blocks
+   - tables
+   - images
+   - task lists
+   - horizontal rules
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Headings
+   -------------------------------------------------------------------------- */
+
+/* Heading anchor — visible on hover */
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  position: relative;
+  scroll-margin-top: 5rem; /* clear the sticky header (h-14 ≈ 3.5rem + buffer) */
+}
+
+.article-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tw-prose-headings, #1f2937);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--tw-prose-hr, #e5e7eb);
+}
+
+.article-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--tw-prose-headings, #1f2937);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--tw-prose-headings, #374151);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Heading anchor — hidden by default, shown on hover */
+.article-content h2 .heading-anchor,
+.article-content h3 .heading-anchor,
+.article-content h4 .heading-anchor {
+  opacity: 0;
+  font-size: 0.875rem;
+  color: oklch(0.7 0.03 280);
+  text-decoration: none;
+  transition: opacity 0.15s;
+  margin-left: 0.25rem;
+}
+
+/* Group hover — show anchor */
+.article-content h2:hover .heading-anchor,
+.article-content h3:hover .heading-anchor,
+.article-content h4:hover .heading-anchor {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Paragraphs
+   -------------------------------------------------------------------------- */
+
+.article-content p {
+  font-size: 1.0625rem; /* ≈ 17px */
+  line-height: 1.85;
+  color: #4b5563;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Blockquotes
+   -------------------------------------------------------------------------- */
+
+.article-content blockquote {
+  border-left: 4px solid oklch(0.55 0.10 280); /* brand-500 */
+  background: oklch(0.97 0.01 280 / 0.6);       /* brand-50 with alpha */
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: normal; /* override Tailwind Typography's italic default */
+  color: #4b5563;
+}
+
+.article-content blockquote p {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.article-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Lists
+   -------------------------------------------------------------------------- */
+
+.article-content ul,
+.article-content ol {
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.8;
+  color: #4b5563;
+}
+
+.article-content li > p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Task list — slightly smaller, muted checkboxes */
+.article-content li.task-list-item {
+  list-style: none;
+  margin-left: -1.5rem;
+}
+
+.article-content li.task-list-item input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: oklch(0.55 0.10 280);
+}
+
+/* --------------------------------------------------------------------------
+   Links (overridden by the custom a component, but belt-and-suspenders)
+   -------------------------------------------------------------------------- */
+
+.article-content a {
+  color: oklch(0.55 0.10 280);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.article-content a:hover {
+  color: oklch(0.45 0.09 280);
+}
+
+/* --------------------------------------------------------------------------
+   Code blocks (rehype-pretty-code output)
+   -------------------------------------------------------------------------- */
+
+.article-content pre {
+  background: #1e1e2e;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  border: 1px solid oklch(0.95 0.01 280);
+}
+
+/* Code block inner <code> — inherits pretty-code styling */
+.article-content pre code {
+  background: transparent;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+  line-height: inherit;
+  counter-reset: line;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+/* Inline <code> (not inside pre) */
+.article-content :not(pre) > code {
+  background: oklch(0.95 0.01 280);
+  color: oklch(0.45 0.09 280); /* brand-600 */
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3em;
+  border: 1px solid oklch(0.9 0.01 280);
+  font-family: var(--font-mono);
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* rehype-pretty-code data-line highlighting (future) */
+.article-content pre [data-line] {
+  padding: 0 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Table
+   -------------------------------------------------------------------------- */
+
+.article-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.article-content thead {
+  border-bottom: 2px solid oklch(0.9 0.01 280);
+}
+
+.article-content th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  color: #374151;
+  font-size: 0.875rem;
+  background: oklch(0.97 0.01 280);
+  white-space: nowrap;
+}
+
+.article-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid oklch(0.95 0.01 280);
+  color: #4b5563;
+  font-size: 0.9375rem;
+}
+
+.article-content tbody tr:hover {
+  background: oklch(0.98 0.01 280);
+}
+
+/* --------------------------------------------------------------------------
+   Horizontal rule
+   -------------------------------------------------------------------------- */
+
+.article-content hr {
+  border: none;
+  border-top: 1px solid oklch(0.9 0.01 280);
+  margin: 2.5rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Images
+   -------------------------------------------------------------------------- */
+
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Strong / Emphasis
+   -------------------------------------------------------------------------- */
+
+.article-content strong {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: mobile adjustments
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+  .article-content h2 {
+    font-size: 1.35rem;
+  }
+
+  .article-content h3 {
+    font-size: 1.15rem;
+  }
+
+  .article-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .article-content pre {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .article-content blockquote {
+    padding: 0.75rem 1rem;
+  }
+}

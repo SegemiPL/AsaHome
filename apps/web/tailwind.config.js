@@ -3,6 +3,9 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  plugins: [
+    require("@tailwindcss/typography"),
+  ],
   theme: {
     extend: {
       // Design Tokens — see src/styles/tokens.ts for the canonical definitions.
