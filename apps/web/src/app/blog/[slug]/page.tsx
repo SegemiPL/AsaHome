@@ -66,8 +66,8 @@ export default async function BlogPostPage({
             Two-column layout: main article + sticky TOC sidebar
             ---------------------------------------------------------- */}
         <div className="flex gap-16 lg:gap-20 xl:gap-24">
-          {/* Main column */}
-          <div className="min-w-0 flex-1">
+          {/* Main column — capped at 720px for comfortable CJK reading */}
+          <div className="min-w-0 flex-1 max-w-[720px]">
             <article>
               {/* Header */}
               <header className="mb-10">
