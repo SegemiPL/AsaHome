@@ -1,18 +1,22 @@
 # API Documentation
 
-> API contracts and specifications.
+AsaHome is currently a static export site. It does not provide runtime API
+routes, Server Actions, middleware, or database-backed endpoints.
 
-## Phase 1
+## Current Site
 
-- `/api/internal/revalidate` — Directus webhook endpoint for cache revalidation
+- Blog content is read from `apps/web/src/content/posts/*.md` at build time.
+- Character, TTS, and WindowPet data is read from `apps/web/src/data/*.ts`.
+- Downloads link to external GitHub Releases.
 
-## Phase 2 (TTS)
+## Future APIs
 
-See `docs/reference/AsaHome_Coding_Agent_Development_Guide.md` Section 10.4 for the TTS API contract.
+If online TTS or other dynamic features become necessary, add them as
+independent services in separate repositories and record the decision in a new
+ADR. Do not add API routes to the static site.
 
 ## Conventions
 
-- External business APIs: `/api/v1/...`
-- Internal management APIs: `/api/internal/...`
-- Error format: `{ code, message, request_id, details? }`
-- Never expose Python tracebacks, SQL errors, or internal hostnames to clients
+- Static site routes must remain compatible with `output: "export"`.
+- Dynamic routes must provide `generateStaticParams()`.
+- Secrets and tokens must not be exposed to browser code.

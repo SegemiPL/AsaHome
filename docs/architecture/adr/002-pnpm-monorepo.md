@@ -6,7 +6,9 @@
 
 ## Context
 
-The project spans multiple packages (shared types, API client, character packages), two apps (web, desktop), and a backend service (TTS). These must share types and logic without duplication.
+The project is currently a static Next.js export site in a pnpm workspace. The
+workspace keeps the web app and shared configuration packages together without
+requiring a heavier build orchestrator.
 
 ## Decision
 
@@ -19,7 +21,7 @@ Use **pnpm workspace** as the monorepo tool. Introduce Turborepo only when build
 
 ## Consequences
 
-- Single `pnpm install` installs all packages
-- Workspace protocol (`workspace:*`) ensures local package references
-- CI caches `pnpm-lock.yaml` for deterministic installs
-- Migration to Turborepo is straightforward if needed
+- Single `pnpm install` installs all packages.
+- Workspace protocol (`workspace:*`) ensures local package references.
+- CI caches `pnpm-lock.yaml` for deterministic installs.
+- Migration to Turborepo is straightforward if needed.

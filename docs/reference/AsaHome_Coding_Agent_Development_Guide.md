@@ -1,5 +1,9 @@
 # AsaHome Coding Agent 开发规范与分阶段实施计划
 
+> Historical reference: this document describes the archived dynamic
+> architecture. The current repository baseline is the static export
+> architecture in `docs/STATIC_ARCHITECTURE.md`.
+
 > 文档状态：Approved Baseline  
 > 适用对象：Coding Agent、项目维护者、后续协作者  
 > 基线日期：2026-06-25  
