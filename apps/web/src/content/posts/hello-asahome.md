@@ -3,9 +3,6 @@ title: "AsaHome的动机"
 slug: "hello-asahome"
 date: "2026-06-25"
 summary: "浅谈一下为什么突然想做这个项目"
-tags:
-  - "project"
-  - "introduction"
 cover: null
 draft: false
 ---

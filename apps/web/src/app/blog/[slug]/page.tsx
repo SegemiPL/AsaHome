@@ -81,18 +81,6 @@ export default async function BlogPostPage({
                     day: "numeric",
                   })}
                 </p>
-                {post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </header>
 
               {/* Inline TOC (mobile only) */}

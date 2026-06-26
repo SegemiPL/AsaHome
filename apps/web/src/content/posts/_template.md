@@ -12,11 +12,6 @@ date: "2026-06-25"
 # 文章摘要（必填），显示在 Blog 列表页，建议 1-2 句话
 summary: "这里是文章摘要，概括文章的核心内容。"
 
-# 文章标签（可选），用于归类和过滤
-tags:
-  - "tag1"
-  - "tag2"
-
 # 封面图片路径（可选），例如 "/images/cover.png"
 # 图片文件放在 apps/web/public/ 下
 cover: null

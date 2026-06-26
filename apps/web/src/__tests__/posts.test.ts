@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getAllPosts, getPostBySlug, getAllPostSlugs, getAllTags } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getAllPostSlugs } from "@/lib/posts";
 
 describe("posts", () => {
   it("should return at least one published post", () => {
@@ -44,11 +44,6 @@ describe("posts", () => {
   it("should return all post slugs", () => {
     const slugs = getAllPostSlugs();
     expect(slugs).toContain("hello-asahome");
-  });
-
-  it("should return tags from posts", () => {
-    const tags = getAllTags();
-    expect(tags.length).toBeGreaterThanOrEqual(1);
   });
 
   it("should not include draft posts in the list", () => {

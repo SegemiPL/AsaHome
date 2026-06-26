@@ -41,7 +41,6 @@ export interface PostListItem {
   date: string;
   summary: string;
   cover: string | null;
-  tags: string[];
 }
 
 // ---------------------------------------------------------------------------
@@ -109,7 +108,6 @@ export function getAllPosts(): PostListItem[] {
     date: p.date,
     summary: p.summary,
     cover: p.cover,
-    tags: p.tags,
   }));
 }
 
@@ -125,14 +123,6 @@ export function getPostBySlug(slug: string): PostData | null {
   }
 
   return null;
-}
-
-/** Get all unique tags across posts. */
-export function getAllTags(): string[] {
-  const posts = getAllPosts();
-  const tagSet = new Set<string>();
-  posts.forEach((p) => p.tags.forEach((t) => tagSet.add(t)));
-  return Array.from(tagSet).sort();
 }
 
 /** Get all post slugs — used by generateStaticParams. */
