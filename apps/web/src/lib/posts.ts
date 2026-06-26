@@ -3,11 +3,14 @@
 // =============================================================================
 // Reads content/posts/*.md at build time.
 // Uses gray-matter for frontmatter parsing.
+// Markdown → React rendering is handled by <MarkdownArticle /> at the page level.
 // =============================================================================
 
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { extractToc } from "./markdown";
+import type { TocEntry } from "./markdown";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -24,7 +27,10 @@ export interface PostFrontmatter {
 }
 
 export interface PostData extends PostFrontmatter {
-  contentHtml: string;
+  /** Raw Markdown body — rendered by <MarkdownArticle> at the page level. */
+  content: string;
+  /** Table of contents extracted from h2/h3 headings. */
+  toc: TocEntry[];
   createdAt: string;
   updatedAt: string;
 }
@@ -35,7 +41,6 @@ export interface PostListItem {
   date: string;
   summary: string;
   cover: string | null;
-  tags: string[];
 }
 
 // ---------------------------------------------------------------------------
@@ -43,59 +48,6 @@ export interface PostListItem {
 // ---------------------------------------------------------------------------
 
 const POSTS_DIR = path.join(process.cwd(), "src", "content", "posts");
-
-// ---------------------------------------------------------------------------
-// Simple Markdown → HTML conversion (no external deps beyond gray-matter)
-// ---------------------------------------------------------------------------
-
-function markdownToHtml(markdown: string): string {
-  let html = markdown;
-
-  // Headings
-  html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
-  html = html.replace(/^## (.+)$/gm, "<h2>$1</h2>");
-  html = html.replace(/^# (.+)$/gm, "<h1>$1</h1>");
-
-  // Bold & italic
-  html = html.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
-
-  // Inline code
-  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
-
-  // Links
-  html = html.replace(
-    /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
-  );
-
-  // Images
-  html = html.replace(
-    /!\[([^\]]*)\]\(([^)]+)\)/g,
-    '<img src="$2" alt="$1" loading="lazy" />'
-  );
-
-  // Horizontal rules
-  html = html.replace(/^---$/gm, "<hr />");
-
-  // Unordered lists (simple — lines starting with - )
-  html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul>$&</ul>");
-
-  // Paragraphs: wrap remaining non-tag lines in <p>
-  html = html
-    .split("\n\n")
-    .map((block) => {
-      const trimmed = block.trim();
-      if (!trimmed) return "";
-      if (trimmed.startsWith("<")) return trimmed;
-      return `<p>${trimmed.replace(/\n/g, "<br />")}</p>`;
-    })
-    .join("\n");
-
-  return html;
-}
 
 // ---------------------------------------------------------------------------
 // Reader
@@ -120,7 +72,8 @@ function readPostFile(filePath: string): PostData | null {
       tags: frontmatter.tags ?? [],
       cover: frontmatter.cover ?? null,
       draft: frontmatter.draft ?? false,
-      contentHtml: markdownToHtml(content),
+      content,
+      toc: extractToc(content),
       createdAt: stat.birthtime.toISOString(),
       updatedAt: stat.mtime.toISOString(),
     };
@@ -155,7 +108,6 @@ export function getAllPosts(): PostListItem[] {
     date: p.date,
     summary: p.summary,
     cover: p.cover,
-    tags: p.tags,
   }));
 }
 
@@ -171,14 +123,6 @@ export function getPostBySlug(slug: string): PostData | null {
   }
 
   return null;
-}
-
-/** Get all unique tags across posts. */
-export function getAllTags(): string[] {
-  const posts = getAllPosts();
-  const tagSet = new Set<string>();
-  posts.forEach((p) => p.tags.forEach((t) => tagSet.add(t)));
-  return Array.from(tagSet).sort();
 }
 
 /** Get all post slugs — used by generateStaticParams. */

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* AsaHome Blog article styles */
+@import "./markdown.css";
+
 /* ==========================================================================
    Base layer — global resets and CSS custom properties
    ========================================================================== */

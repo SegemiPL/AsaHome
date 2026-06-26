@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPostSlugs, getAllPosts } from "@/lib/posts";
+import { MarkdownArticle } from "@/components/blog/MarkdownArticle";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { MobileTableOfContents } from "@/components/blog/MobileTableOfContents";
 
 // ---------------------------------------------------------------------------
 // Static path generation
@@ -58,50 +61,43 @@ export default async function BlogPostPage({
 
   return (
     <div className="section">
-      <div className="section-inner max-w-prose mx-auto">
-        <article>
-          {/* Header */}
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              {post.title}
-            </h1>
-            <p className="text-sm text-gray-400">
-              {new Date(post.date).toLocaleDateString("zh-CN", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </p>
-            {post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </header>
+      <div className="max-w-content mx-auto">
+        {/* ----------------------------------------------------------
+            Two-column layout: main article + sticky TOC sidebar
+            ---------------------------------------------------------- */}
+        {/* ----------------------------------------------------------
+            Article centered, TOC floats to its right.
+            The article wrapper is sized and centered. The TOC uses
+            absolute positioning relative to it so it sits to the right
+            without affecting the article's centering.
+            ---------------------------------------------------------- */}
+        <div className="relative max-w-[840px] mx-auto">
+          <article>
+            {/* Header */}
+            <header className="mb-10">
+              <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                {post.title}
+              </h1>
+              <p className="text-sm text-gray-400">
+                {new Date(post.date).toLocaleDateString("zh-CN", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </header>
 
-          {/* Content */}
-          <div
-            className="prose prose-gray max-w-none
-              prose-headings:text-gray-800
-              prose-p:text-gray-600 prose-p:leading-relaxed
-              prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline
-              prose-code:text-sm prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-              prose-pre:bg-gray-900 prose-pre:text-gray-100
-              prose-img:rounded-lg
-              prose-li:text-gray-600
-              prose-hr:border-gray-200"
-            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-          />
+            {/* Inline TOC (mobile only) */}
+            <MobileTableOfContents items={post.toc} />
 
-          {/* Navigation */}
-          <nav className="mt-12 pt-6 border-t border-gray-200 flex justify-between items-start gap-4">
+            {/* Article body */}
+            <div className="article-content mb-12">
+              <MarkdownArticle source={post.content} />
+            </div>
+          </article>
+
+          {/* Post navigation */}
+          <nav className="pt-6 border-t border-gray-200 flex justify-between items-start gap-4">
             {prevPost ? (
               <Link
                 href={`/blog/${prevPost.slug}`}
@@ -123,12 +119,17 @@ export default async function BlogPostPage({
               <span />
             )}
           </nav>
-        </article>
 
-        <div className="mt-8">
-          <Link href="/blog" className="text-sm text-brand-600 hover:underline">
-            ← 返回 Blog 列表
-          </Link>
+          <div className="mt-6">
+            <Link href="/blog" className="text-sm text-brand-600 hover:underline">
+              ← 返回 Blog 列表
+            </Link>
+          </div>
+
+          {/* Desktop TOC — absolutely positioned to the right of the article */}
+          <aside className="hidden lg:block absolute top-0 left-[calc(100%+48px)] xl:left-[calc(100%+64px)] w-[210px] xl:w-[240px]">
+            <TableOfContents items={post.toc} />
+          </aside>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getAllPosts, getPostBySlug, getAllPostSlugs, getAllTags } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getAllPostSlugs } from "@/lib/posts";
 
 describe("posts", () => {
   it("should return at least one published post", () => {
@@ -19,8 +19,21 @@ describe("posts", () => {
   it("should find the hello-asahome post by slug", () => {
     const post = getPostBySlug("hello-asahome");
     expect(post).not.toBeNull();
-    expect(post!.title).toBe("AsaHome 项目启动");
-    expect(post!.contentHtml).toContain("AsaHome");
+    expect(post!.title).toBe("AsaHome的动机");
+    // Content should be raw markdown string, rendered by MarkdownArticle component
+    expect(post!.content).toContain("AsaHome");
+  });
+
+  it("should have TOC entries for hello-asahome", () => {
+    const post = getPostBySlug("hello-asahome");
+    expect(post).not.toBeNull();
+    expect(post!.toc.length).toBeGreaterThanOrEqual(1);
+    // Each TOC entry should have id, text, level
+    for (const entry of post!.toc) {
+      expect(entry.id).toBeTruthy();
+      expect(entry.text).toBeTruthy();
+      expect([2, 3]).toContain(entry.level);
+    }
   });
 
   it("should return null for non-existent slug", () => {
@@ -33,16 +46,9 @@ describe("posts", () => {
     expect(slugs).toContain("hello-asahome");
   });
 
-  it("should return tags from posts", () => {
-    const tags = getAllTags();
-    expect(tags.length).toBeGreaterThanOrEqual(1);
-  });
-
   it("should not include draft posts in the list", () => {
     const posts = getAllPosts();
     posts.forEach((post) => {
-      // All posts returned should be published (draft: false)
-      // This is verified indirectly since getPostBySlug returns null for drafts
       const detail = getPostBySlug(post.slug);
       expect(detail).not.toBeNull();
     });

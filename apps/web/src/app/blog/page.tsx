@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getAllPosts, getAllTags } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 
 export default function BlogListPage() {
   const posts = getAllPosts();
-  const tags = getAllTags();
 
   return (
     <div className="section">
@@ -34,33 +33,11 @@ export default function BlogListPage() {
                     day: "numeric",
                   })}
                 </p>
-                {post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
                 <p className="text-gray-600 mt-3 text-sm leading-relaxed">
                   {post.summary}
                 </p>
               </article>
             ))}
-          </div>
-        )}
-
-        {tags.length > 0 && (
-          <div className="mt-12 pt-6 border-t border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">标签</h3>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <span key={tag} className="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
         )}
       </div>
